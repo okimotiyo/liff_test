@@ -76,7 +76,7 @@
                 const fukkin  = $('input[name="fukkin"]').val();
                 const haikin  = $('input[name="haikin"]').val();
                 const sukuwat = $('input[name="sukuwat"]').val();
-                const msg = "以下の内容で予約を受け付けました。"+"\n"+`${name}\n${udetate}\n${fukkin}\n${haikin}\n${sukuwat}`;
+                const msg = `${name}\n${udetate}\n${fukkin}\n${haikin}\n${sukuwat}`;
                 sendText(msg);
                 return false;
             });
