@@ -111,9 +111,12 @@
                 const temperature = $('select[name="temperature"]').val();
                  // Firestoreにデータを追加
                 db.collection('users').add({
-                    name: name,
-                    email: email,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    goal: `${goal}`,
+                    company:  `${name}`,
+                    number: `${number}`,
+                    start: `${arrive}`,
+                    end: `${leave}`,
+                    temperature: `${temperature}`,
                 })
                 .then(() => {
                     alert('データが送信されました');
