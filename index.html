@@ -55,6 +55,23 @@
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
     <script>
 
+        // Firebaseの設定
+        const firebaseConfig = {
+          apiKey: "AIzaSyAZEzzVgfK__oh6fp6tc8zkXlgeO9AzgVI",
+          authDomain: "ix14-c72ec.firebaseapp.com",
+          projectId: "ix14-c72ec",
+          storageBucket: "ix14-c72ec.appspot.com",
+          messagingSenderId: "624123436624",
+          appId: "1:624123436624:web:c60a7b4739704a699dfb55",
+          measurementId: "G-XSPCR8WDH8"
+        };
+
+        // Firebaseを初期化
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore(app);
+
+        
+
         $(document).ready(function () {
             const liffId = "2005700642-nJpNM1y1";
             initializeLiff(liffId);
@@ -92,6 +109,21 @@
                 const arrive  = $('input[name="arrive"]').val();
                 const leave  = $('input[name="leave"]').val();
                 const temperature = $('select[name="temperature"]').val();
+                 // Firestoreにデータを追加
+                db.collection('users').add({
+                    name: name,
+                    email: email,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                })
+                .then(() => {
+                    alert('データが送信されました');
+                })
+                .catch((error) => {
+                    console.error('Error adding document: ', error);
+                    alert('データの送信に失敗しました');
+                });
+
+
                 const msg = `${goal}\n${name}\n${number}\n${arrive}\n${leave}\n${temperature}`;
                 sendText(msg);
                 return false;
