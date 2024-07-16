@@ -112,8 +112,10 @@
                 const goal   = $('select[name="goal"]').val();
                 const name   = $('input[name="name"]').val();
                 const number = $('input[name="number"]').val();
-                const arrive  = $('input[name="arrive"]').val();
-                const leave  = $('input[name="leave"]').val();
+                let arrive  = $('input[name="arrive"]').val();
+                const arrive = Timestamp.fromDate(arrive);
+                let leave  = $('input[name="leave"]').val();
+                const timestamp = Timestamp.fromDate(leave);
                 const temperature = $('select[name="temperature"]').val();
                  // Firestoreにデータを追加
                 db.collection('users').add({
