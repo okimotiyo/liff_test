@@ -113,9 +113,9 @@
                 const name   = $('input[name="name"]').val();
                 const number = $('input[name="number"]').val();
                 let arrive  = $('input[name="arrive"]').val();
-                const arrive = Timestamp.fromDate(arrive);
+                let arrive = Timestamp.fromDate(arrive);
                 let leave  = $('input[name="leave"]').val();
-                const timestamp = Timestamp.fromDate(leave);
+                let leave = Timestamp.fromDate(leave);
                 const temperature = $('select[name="temperature"]').val();
                  // Firestoreにデータを追加
                 db.collection('users').add({
