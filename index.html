@@ -55,24 +55,28 @@
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
-    <script>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
 
-        // Firebaseの設定
-        const firebaseConfig = {
-          apiKey: "AIzaSyAZEzzVgfK__oh6fp6tc8zkXlgeO9AzgVI",
-          authDomain: "ix14-c72ec.firebaseapp.com",
-          projectId: "ix14-c72ec",
-          storageBucket: "ix14-c72ec.appspot.com",
-          messagingSenderId: "624123436624",
-          appId: "1:624123436624:web:c60a7b4739704a699dfb55",
-          measurementId: "G-XSPCR8WDH8"
-        };
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyAZEzzVgfK__oh6fp6tc8zkXlgeO9AzgVI",
+        authDomain: "ix14-c72ec.firebaseapp.com",
+        projectId: "ix14-c72ec",
+        storageBucket: "ix14-c72ec.appspot.com",
+        messagingSenderId: "624123436624",
+        appId: "1:624123436624:web:c60a7b4739704a699dfb55",
+        measurementId: "G-XSPCR8WDH8"
+      };
 
-        // Firebaseを初期化
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore(app);
-
-        
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
 
         $(document).ready(function () {
             const liffId = "2005700642-nJpNM1y1";
