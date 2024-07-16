@@ -75,8 +75,8 @@
       };
 
       // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
+      const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
         $(document).ready(function () {
             const liffId = "2005700642-nJpNM1y1";
