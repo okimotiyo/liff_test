@@ -76,86 +76,84 @@
 
       // Initialize Firebase
       const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+      const db = firebase.firestore();
 
-        $(document).ready(function () {
-            const liffId = "2005700642-nJpNM1y1";
-            initializeLiff(liffId);
-        })
+      $(document).ready(function () {
+          const liffId = "2005700642-nJpNM1y1";
+          initializeLiff(liffId);
+      })
 
-        function initializeLiff(liffId) {
-            liff.init({
-                liffId: liffId
-            }).then(() => {
-                initializeApp();
-            }).catch((err) => {
-                console.log('LIFF Initialization failed ', err);
-            });
-        }
+      function initializeLiff(liffId) {
+          liff.init({
+              liffId: liffId
+          }).then(() => {
+              initializeApp();
+          }).catch((err) => {
+              console.log('LIFF Initialization failed ', err);
+          });
+      }
 
-        function sendText(text) {
-            liff.sendMessages([{
-                'type': 'text',
-                'text': text
-            }]).then(function () {
-                liff.closeWindow();
-            }).catch(function (error) {
-                window.alert('Failed to send message ' + error);
-            });
-        }
+      function sendText(text) {
+          liff.sendMessages([{
+              'type': 'text',
+              'text': text
+          }]).then(function () {
+              liff.closeWindow();
+          }).catch(function (error) {
+              window.alert('Failed to send message ' + error);
+          });
+      }
 
-        const params = (new URL(document.location)).searchParams;
-        const key = params.get('key');
+      $(function () {
+          $('form').submit(function () {
+              const goal = $('select[name="goal"]').val();
+              const name = $('input[name="name"]').val();
+              const number = $('input[name="number"]').val();
+              let arrive = $('input[name="arrive"]').val();
+              let leave = $('input[name="leave"]').val();
+              const temperature = $('select[name="temperature"]').val();
 
-        $(function () {
-            $('form').submit(function () {
-                const goal   = $('select[name="goal"]').val();
-                const name   = $('input[name="name"]').val();
-                const number = $('input[name="number"]').val();
-                let arrive  = $('input[name="arrive"]').val();
-                let arrive = Timestamp.fromDate(arrive);
-                let leave  = $('input[name="leave"]').val();
-                let leave = Timestamp.fromDate(leave);
-                const temperature = $('select[name="temperature"]').val();
-                 // Firestoreにデータを追加
-                db.collection('users').add({
-                    goal: `${goal}`,
-                    company:  `${name}`,
-                    number: `${number}`,
-                    start: `${arrive}`,
-                    end: `${leave}`,
-                    temperature: `${temperature}`,
-                    status: "0",
-                    title: "test",
-                    resourceId: 0
-                })
-                .then(() => {
-                    alert('データが送信されました');
-                })
-                .catch((error) => {
-                    console.error('Error adding document: ', error);
-                    alert('データの送信に失敗しました');
-                });
+              // arriveとleaveをFirebase Timestampに変換する
+              const arriveTimestamp = firebase.firestore.Timestamp.fromDate(new Date(arrive));
+              const leaveTimestamp = firebase.firestore.Timestamp.fromDate(new Date(leave));
 
+              // Firestoreにデータを追加
+              db.collection('users').add({
+                  goal: goal,
+                  company: name,
+                  number: number,
+                  start: arriveTimestamp,
+                  end: leaveTimestamp,
+                  temperature: temperature,
+                  status: "0",
+                  title: "test",
+                  resourceId: 0
+              })
+              .then(() => {
+                  alert('データが送信されました');
+              })
+              .catch((error) => {
+                  console.error('Error adding document: ', error);
+                  alert('データの送信に失敗しました');
+              });
 
-                const msg = `${goal}\n${name}\n${number}\n${arrive}\n${leave}\n${temperature}`;
-                sendText(msg);
-                return false;
-            });
-        });
+              const msg = `${goal}\n${name}\n${number}\n${arrive}\n${leave}\n${temperature}`;
+              sendText(msg);
+              return false;
+          });
+      });
 
-        window.onload = function(){
-            var getToday = new Date();
-            var y = getToday.getFullYear();
-            var m = getToday.getMonth() + 1;
-            var d = getToday.getDate();
-            var hours = getToday.getHours();
-            var minutes = getToday.getMinutes();
-            var today = y + "-" + m.toString().padStart(2,'0') + "-" + d.toString().padStart(2,'0') + "T" + hours.toString().padStart(2,'0') + ":" + minutes.toString().padStart(2,'0') ;
-            document.getElementById("datepicker1").setAttribute("value",today);
-            document.getElementById("datepicker2").setAttribute("value",today);
-        }
-
+      window.onload = function () {
+          var getToday = new Date();
+          var y = getToday.getFullYear();
+          var m = getToday.getMonth() + 1;
+          var d = getToday.getDate();
+          var hours = getToday.getHours();
+          var minutes = getToday.getMinutes();
+          var today = y + "-" + m.toString().padStart(2, '0') + "-" + d.toString().padStart(2, '0') + "T" + hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0');
+          document.getElementById("datepicker1").setAttribute("value", today);
+          document.getElementById("datepicker2").setAttribute("value", today);
+      }
     </script>
 
 </body>
